@@ -1,13 +1,13 @@
 import React from 'react';
 import axios from 'axios';
-import { Carousel } from 'react-bootstrap';
+import { Carousel, Button } from 'react-bootstrap';
 import './App.css';
 
 class BestBooks extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      books:[]
+      books: []
     }
   }
 
@@ -22,6 +22,29 @@ class BestBooks extends React.Component {
     } catch (error) {
       console.log(error.message);
     }
+  }
+
+  postBook = async (bookObj) => {
+    try {
+      let url = `${process.env.REACT_APP_SERVER}/books`;
+      let newBookFromDB = await axios.post(url, bookObj);
+      this.getAllBooks();
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+
+  handleBookSubmit = (event) => {
+    event.preventDefault();
+
+    let bookObj = {
+      title: event.target.title.value,
+      description: event.target.description.value,
+      status: event.target.status.checked
+    }
+
+    this.postBook(bookObj);
+
   }
 
   componentDidMount() {
