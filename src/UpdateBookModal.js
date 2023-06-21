@@ -29,7 +29,6 @@ class UpdateBookModal extends React.Component {
                 <Form onSubmit={this.handleBookUpdate}>
                   <Form.Group controlId="title">
                     <Form.Label>Title</Form.Label>
-                    {console.log(this.props.bookToUpdate.title)}
                     <Form.Control type="text" defaultValue={this.props.bookToUpdate.title} />
                   </Form.Group>
                   <Form.Group controlId="description">

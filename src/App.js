@@ -126,7 +126,6 @@ class App extends React.Component {
               books={this.state.books} 
               deleteBook={this.deleteBook} 
               putBook={this.putBook}
-              bookToUpdate={this.state.bookToUpdate} 
               handleShowUpdateModal={this.handleShowUpdateModal}
               />
               <NewBook 
