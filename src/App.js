@@ -24,7 +24,7 @@ class App extends React.Component {
   getAllBooks = async () => {
     try {
       let url = `${process.env.REACT_APP_SERVER}/books`
-
+      
       let booksFromDB = await axios.get(url);
       this.setState({
         books: booksFromDB.data
@@ -37,8 +37,28 @@ class App extends React.Component {
   postBook = async (bookObj) => {
     try {
       let url = `${process.env.REACT_APP_SERVER}/books`;
-      await axios.post(url, bookObj);
-      this.getAllBooks();
+      let createdBook = await axios.post(url, bookObj);
+
+      this.setState({
+        books:[...this.state.books, createdBook.data]
+      })
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+
+  deleteBook = async (id) => {
+    try {
+      let url = `${process.env.REACT_APP_SERVER}/books/${id}`;
+
+      await axios.delete(url);
+
+      let updatedBooks = this.state.books.filter(book => book._id !== id);
+      console.log(updatedBooks);
+
+      this.setState({
+        books: updatedBooks
+      })
     } catch (error) {
       console.log(error.message);
     }
@@ -66,7 +86,21 @@ class App extends React.Component {
         <Router>
           <Header handleShowModal={this.handleShowModal}/>
           <Routes>
-            <Route exact path="/" element={<><BestBooks books={this.state.books}/> <NewBook handleShowModal={this.handleShowModal} handleCloseModal={this.handleCloseModal} showModal={this.state.showModal} postBook={this.postBook} /></>}>
+            <Route exact path="/" 
+              element={
+              <>
+              <BestBooks 
+              books={this.state.books} 
+              deleteBook={this.deleteBook} 
+              />
+              <NewBook 
+              handleShowModal={this.handleShowModal} 
+              handleCloseModal={this.handleCloseModal} 
+              showModal={this.state.showModal} 
+              postBook={this.postBook} 
+              />
+              </>
+            }>
             </Route>
             <Route exact path="/about" element={<About />} >
             </Route>
