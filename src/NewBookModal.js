@@ -13,8 +13,8 @@ class NewBookModal extends React.Component{
       status: event.target.status.checked
     }
 
-    this.props.handleCloseModal();
     this.props.postBook(bookObj);
+    this.props.handleCloseModal();
 
   }
 
