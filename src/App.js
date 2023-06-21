@@ -37,7 +37,7 @@ class App extends React.Component {
   postBook = async (bookObj) => {
     try {
       let url = `${process.env.REACT_APP_SERVER}/books`;
-      let newBookFromDB = await axios.post(url, bookObj);
+      await axios.post(url, bookObj);
       this.getAllBooks();
     } catch (error) {
       console.log(error.message);
