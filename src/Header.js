@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navbar, NavItem } from 'react-bootstrap';
+import { Navbar, NavItem, Button } from 'react-bootstrap';
 import { Link } from "react-router-dom";
 
 class Header extends React.Component {
@@ -9,7 +9,7 @@ class Header extends React.Component {
         <Navbar.Brand>My Favorite Books</Navbar.Brand>
         <NavItem><Link to="/" className="nav-link">Home</Link></NavItem>
         <NavItem><Link to="/about" className="nav-link">About</Link></NavItem>
-        {/* PLACEHOLDER: render a navigation link to the about page */}
+        <Button onClick={this.props.handleShowModal} variant='primary'>Add a Book</Button>
       </Navbar>
     )
   }
