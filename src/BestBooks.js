@@ -4,6 +4,8 @@ import './App.css';
 
 class BestBooks extends React.Component {
 
+  
+
   render() {
 
 
@@ -25,6 +27,7 @@ class BestBooks extends React.Component {
                 <h3>{book.title}</h3>
                 <p>{book.description}</p>
                 <Button variant="primary" onClick={() => this.props.deleteBook(book._id)}>Delete</Button>
+                <Button variant='secondary' onClick={() => this.props.handleShowUpdateModal(book)}>Update Book</Button>
               </Carousel.Caption>
             </Carousel.Item>
     })}

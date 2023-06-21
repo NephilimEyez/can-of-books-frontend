@@ -11,13 +11,16 @@ import {
 } from "react-router-dom";
 import axios from 'axios';
 import NewBook from './NewBookModal';
+import UpdateBook from './UpdateBookModal';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       books: [],
-      showModal: false
+      bookToUpdate: {},
+      showAddModal: false,
+      showUpdateModal: false
     }
   }
 
@@ -54,7 +57,6 @@ class App extends React.Component {
       await axios.delete(url);
 
       let updatedBooks = this.state.books.filter(book => book._id !== id);
-      console.log(updatedBooks);
 
       this.setState({
         books: updatedBooks
@@ -64,19 +66,50 @@ class App extends React.Component {
     }
   }
 
+  putBook = async (bookObj) => {
+    try {
+      let url = `${process.env.REACT_APP_SERVER}/books/${bookObj._id}`;
+      let updatedBookFromAxios = await axios.put(url, bookObj);
+
+      let updatedBookArr = this.state.books.map(book => {
+        return book._id === bookObj._id ? updatedBookFromAxios : book
+      });
+
+      this.setState({
+        books: updatedBookArr
+      });
+
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+
   componentDidMount() {
     this.getAllBooks();
   }
 
-  handleShowModal = () => {
+  handleShowAddModal = () => {
     this.setState({
-      showModal: true
+      showAddModal: true
     })
   }
 
-  handleCloseModal = () => {
+  handleCloseAddModal = () => {
     this.setState({
-      showModal: false
+      showAddModal: false
+    })
+  }
+
+  handleShowUpdateModal = (bookToUpdate) => {
+    this.setState({
+      bookToUpdate: bookToUpdate,
+      showAddModal: true
+    })
+  }
+
+  handleCloseUpdateModal = () => {
+    this.setState({
+      showAddModal: false
     })
   }
 
@@ -84,7 +117,7 @@ class App extends React.Component {
     return (
       <>
         <Router>
-          <Header handleShowModal={this.handleShowModal}/>
+          <Header handleShowAddModal={this.handleShowAddModal}/>
           <Routes>
             <Route exact path="/" 
               element={
@@ -92,12 +125,22 @@ class App extends React.Component {
               <BestBooks 
               books={this.state.books} 
               deleteBook={this.deleteBook} 
+              putBook={this.putBook}
+              bookToUpdate={this.state.bookToUpdate} 
+              handleShowUpdateModal={this.handleShowUpdateModal}
               />
               <NewBook 
-              handleShowModal={this.handleShowModal} 
-              handleCloseModal={this.handleCloseModal} 
-              showModal={this.state.showModal} 
+              handleShowAddModal={this.handleShowAddModal} 
+              handleCloseAddModal={this.handleCloseAddModal} 
+              showAddModal={this.state.showAddModal} 
               postBook={this.postBook} 
+              />
+              <UpdateBook 
+              bookToUpdate={this.state.bookToUpdate} 
+              putBook={this.putBook}
+              showUpdateModal={this.state.showUpdateModal}
+              handleShowUpdateModal={this.handleShowUpdateModal}
+              handleCloseUpdateModal={this.handleCloseUpdateModal}
               />
               </>
             }>

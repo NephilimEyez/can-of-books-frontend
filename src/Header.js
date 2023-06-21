@@ -9,7 +9,7 @@ class Header extends React.Component {
         <Navbar.Brand>My Favorite Books</Navbar.Brand>
         <NavItem><Link to="/" className="nav-link">Home</Link></NavItem>
         <NavItem><Link to="/about" className="nav-link">About</Link></NavItem>
-        <Button onClick={this.props.handleShowModal} variant='primary'>Add a Book</Button>
+        <Button onClick={this.props.handleShowAddModal} variant='primary'>Add a Book</Button>
       </Navbar>
     )
   }

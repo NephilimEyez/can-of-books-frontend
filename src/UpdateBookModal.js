@@ -1,62 +1,63 @@
 import React from "react";
-import { Container, Form, Button, Modal } from 'react-bootstrap';
+import { Form, Button, Modal } from 'react-bootstrap';
 
-class NewBookModal extends React.Component {
+class UpdateBookModal extends React.Component {
 
-  handleBookSubmit = (event) => {
+  handleBookUpdate = (event) => {
     event.preventDefault();
 
     let bookObj = {
       title: event.target.title.value,
       description: event.target.description.value,
       isbn: event.target.isbn.value,
-      status: event.target.status.checked
+      status: event.target.status.checked,
+      _id: this.props.bookToUpdate._id,
+      __v: this.props.bookToUpdate.__v
     }
 
-    this.props.postBook(bookObj);
-    this.props.handleCloseAddModal();
-
+    this.props.putBook(bookObj);
+    this.props.handleCloseUpdateModal();
   }
 
-    render() {
+    render(){
         return (
-            <Modal show={this.props.showAddModal} >
-            <Modal.Header closeButton onClick={this.props.handleCloseAddModal}>
+            <Modal show={this.props.showUpdateModal} >
+            <Modal.Header closeButton onClick={this.props.handleCloseUpdateModal}>
               <Modal.Title>Add a new book</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <Container className="mt-5">
-                <Form onSubmit={this.handleBookSubmit}>
+                <Form onSubmit={this.handleBookUpdate}>
                   <Form.Group controlId="title">
                     <Form.Label>Title</Form.Label>
-                    <Form.Control type="text" />
+                    {console.log(this.props.bookToUpdate.title)}
+                    <Form.Control type="text" defaultValue={this.props.bookToUpdate.title} />
                   </Form.Group>
                   <Form.Group controlId="description">
                     <Form.Label>Description</Form.Label>
-                    <Form.Control type="text" />
+                    <Form.Control type="text" defaultValue={this.props.bookToUpdate.description} />
                   </Form.Group>
                   <Form.Group controlId="isbn">
                     <Form.Label>ISBN</Form.Label>
-                    <Form.Control type="text" />
+                    <Form.Control type="text" defaultValue={this.props.bookToUpdate.isbn} />
                   </Form.Group>
                   <Form.Group controlId="status">
                     <Form.Label>Controversial</Form.Label>
-                    <Form.Check type="checkbox" label="Controversial?" />
+                    <Form.Check type="checkbox" label="Controversial?" defaultChecked={this.props.bookToUpdate.status} />
                   </Form.Group>
-                <Button variant="secondary" onClick={this.props.handleCloseAddModal}>
+                <Button variant="secondary" onClick={this.props.handleCloseUpdateModal}>
                   Close
                 </Button>
                 <Button variant="primary" type="submit" >
                   Save Changes
                 </Button>
                 </Form>
-              </Container>
             </Modal.Body>
             <Modal.Footer>
             </Modal.Footer>
           </Modal>
+        
         )
     }
 }
 
-export default NewBookModal;
+export default UpdateBookModal;
