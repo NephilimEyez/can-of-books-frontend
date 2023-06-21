@@ -44,19 +44,6 @@ class App extends React.Component {
     }
   }
 
-  handleBookSubmit = (event) => {
-    event.preventDefault();
-
-    let bookObj = {
-      title: event.target.title.value,
-      description: event.target.description.value,
-      status: event.target.status.checked
-    }
-
-    this.postBook(bookObj);
-
-  }
-
   componentDidMount() {
     this.getAllBooks();
   }
@@ -79,7 +66,7 @@ class App extends React.Component {
         <Router>
           <Header handleShowModal={this.handleShowModal}/>
           <Routes>
-            <Route exact path="/" element={<><BestBooks books={this.state.books}/> <NewBook handleShowModal={this.handleShowModal} handleCloseModal={this.handleCloseModal} showModal={this.state.showModal}/></>}>
+            <Route exact path="/" element={<><BestBooks books={this.state.books}/> <NewBook handleShowModal={this.handleShowModal} handleCloseModal={this.handleCloseModal} showModal={this.state.showModal} postBook={this.postBook} /></>}>
             </Route>
             <Route exact path="/about" element={<About />} >
             </Route>

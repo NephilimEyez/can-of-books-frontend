@@ -18,7 +18,7 @@ class BestBooks extends React.Component {
                 return <Carousel.Item key={index}>
               <img
                 className="d-block w-100"
-                src={require(`./imgs/${book._id}.jpg`)}
+                src={`https://covers.openlibrary.org/b/isbn/${book.isbn}-L.jpg`}
                 alt={book.title}
                 />
               <Carousel.Caption>

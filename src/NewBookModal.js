@@ -1,7 +1,23 @@
 import React from "react";
-import { Form, Button, Modal } from 'react-bootstrap';
+import { Container, Form, Button, Modal } from 'react-bootstrap';
 
 class NewBookModal extends React.Component{
+
+  handleBookSubmit = (event) => {
+    event.preventDefault();
+
+    let bookObj = {
+      title: event.target.title.value,
+      description: event.target.description.value,
+      isbn: event.target.isbn.value,
+      status: event.target.status.checked
+    }
+
+    this.props.handleCloseModal();
+    this.props.postBook(bookObj);
+
+  }
+
     render() {
         return (
             <Modal show={this.props.showModal} >
@@ -9,32 +25,34 @@ class NewBookModal extends React.Component{
               <Modal.Title>Add a new book</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <Form >
-                <Form.Group controlId="title">
-                  <Form.Label>Title</Form.Label>
-                  <Form.Control type="text" />
-                </Form.Group>
-                <Form.Group controlId="description">
-                  <Form.Label>Description</Form.Label>
-                  <Form.Control type="text" />
-                </Form.Group>
-                <Form.Group controlId="image">
-                  <Form.Label>Book Cover</Form.Label>
-                  <Form.Control type="file" />
-                </Form.Group>
-                <Form.Group controlId="banned">
-                  <Form.Label>Controversial</Form.Label>
-                  <Form.Check type="checkbox" label="Controversial?" />
-                </Form.Group>
-              </Form>
+              <Container className="mt-5">
+                <Form onSubmit={this.handleBookSubmit}>
+                  <Form.Group controlId="title">
+                    <Form.Label>Title</Form.Label>
+                    <Form.Control type="text" />
+                  </Form.Group>
+                  <Form.Group controlId="description">
+                    <Form.Label>Description</Form.Label>
+                    <Form.Control type="text" />
+                  </Form.Group>
+                  <Form.Group controlId="isbn">
+                    <Form.Label>ISBN</Form.Label>
+                    <Form.Control type="text" />
+                  </Form.Group>
+                  <Form.Group controlId="status">
+                    <Form.Label>Controversial</Form.Label>
+                    <Form.Check type="checkbox" label="Controversial?" />
+                  </Form.Group>
+                <Button variant="secondary" onClick={this.props.handleCloseModal}>
+                  Close
+                </Button>
+                <Button variant="primary" type="submit" >
+                  Save Changes
+                </Button>
+                </Form>
+              </Container>
             </Modal.Body>
             <Modal.Footer>
-              <Button variant="secondary" onClick={this.props.handleCloseModal}>
-                Close
-              </Button>
-              <Button variant="primary" >
-                Save Changes
-              </Button>
             </Modal.Footer>
           </Modal>
         )
