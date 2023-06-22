@@ -23,7 +23,7 @@ class UpdateBookModal extends React.Component {
         return (
             <Modal show={this.props.showUpdateModal} >
             <Modal.Header closeButton onClick={this.props.handleCloseUpdateModal}>
-              <Modal.Title>Add a new book</Modal.Title>
+              <Modal.Title>Update a new book</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <Form onSubmit={this.handleBookUpdate}>

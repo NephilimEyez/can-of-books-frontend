@@ -72,7 +72,7 @@ class App extends React.Component {
       let updatedBookFromAxios = await axios.put(url, bookObj);
 
       let updatedBookArr = this.state.books.map(book => {
-        return book._id === bookObj._id ? updatedBookFromAxios : book
+        return book._id === bookObj._id ? updatedBookFromAxios.data : book
       });
 
       this.setState({
@@ -103,13 +103,13 @@ class App extends React.Component {
   handleShowUpdateModal = (bookToUpdate) => {
     this.setState({
       bookToUpdate: bookToUpdate,
-      showAddModal: true
+      showUpdateModal: true
     })
   }
 
   handleCloseUpdateModal = () => {
     this.setState({
-      showAddModal: false
+      showUpdateModal: false
     })
   }
 

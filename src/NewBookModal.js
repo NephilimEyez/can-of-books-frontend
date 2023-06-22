@@ -47,7 +47,7 @@ class NewBookModal extends React.Component {
                   Close
                 </Button>
                 <Button variant="primary" type="submit" >
-                  Save Changes
+                  Add Book
                 </Button>
                 </Form>
               </Container>
